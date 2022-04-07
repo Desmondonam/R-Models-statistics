@@ -54,6 +54,42 @@ corpus = tm_map(corpus, stripWhitespace) as.character(corpus[[1]])
 
 
 
+#As naive bayes algorithm excepts binary 
+convert <- function(x) {
+  y <- ifelse(x > 0, 1,0)
+  y <- factor(y, levels=c(0,1), labels=c("No", "Yes"))
+  y
+}  
+
+datanaive = apply(dtm, 2, convert)
+
+dataset = as.data.frame(as.matrix(datanaive))    
+dataset$Class = datas$sentiment
+str(dataset$Class)
+
+set.seed(31)
+split = sample(2,nrow(dataset),prob = c(0.75,0.25),replace = TRUE)
+train_set = dataset[split == 1,]
+test_set = dataset[split == 2,] 
+
+prop.table(table(train_set$Class))
+prop.table(table(test_set$Class))
+
+# naive bayes
+install.packages("e1071")
+library(e1071)
+library(caret)
+control= trainControl(method="repeatedcv", number=10, repeats=2)
+system.time( classifier_nb <- naiveBayes(train_set, train_set$Class, laplace = 1,trControl = control,tuneLength = 7) )
+
+
+# model evaluation
+
+nb_pred = predict(classifier_nb, type = 'class', newdata =  test_set)
+confusionMatrix(nb_pred,test_set$Class)
+
+
+
 
 
 
