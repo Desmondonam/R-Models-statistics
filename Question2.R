@@ -9,9 +9,18 @@ library("tidytext")
 
 ## Get the data that we are working with
 
-my_data <- read.delim("D:/Obita/21123456D/Assignment_Data/Q2/train_tweets_new.txt")
-my_data
+# Chnage the names of the columns
 
+my_data <- read.delim("D:/Obita/21123456D/Assignment_Data/Q2/train_tweets_new.txt")
+head(my_data)
+colnames(my_data)[colnames(my_data)=="X264183816548130816"] <- "tweetID"
+colnames(my_data)[colnames(my_data)=="X15140428"] <- "userID"
+colnames(my_data)[colnames(my_data)=="positive"] <- "Sentiment"
+colnames(my_data)[colnames(my_data)=="                                                                                 Gas.by.my.house.hit..3.39.....I.m.going.to.Chapel.Hill.on.Sat....
+"] <- "text"
+
+
+head(my_data)
 # convert tweets to df
 df <- twListToDF(my_data)
 # text cleaning
