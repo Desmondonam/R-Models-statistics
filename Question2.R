@@ -19,6 +19,10 @@ colnames(my_data)[colnames(my_data)=="positive"] <- "Sentiment"
 colnames(my_data)[colnames(my_data)=="                                                                                 Gas.by.my.house.hit..3.39.....I.m.going.to.Chapel.Hill.on.Sat....
 "] <- "text"
 
+# 2. Explore an external tokenizer 
+
+
+
 
 head(my_data)
 # convert tweets to df
